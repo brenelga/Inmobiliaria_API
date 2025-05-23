@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\MultasController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------

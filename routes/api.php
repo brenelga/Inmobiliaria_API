@@ -20,7 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/notificaciones/{departamentoId}', function ($departamentoId) {
-    return Multa::where('departamento_id', $departamentoId)
-        ->orderBy('fecha', 'desc')
-        ->get();
+    return response()->json(
+        Multa::where('departamento_id', (string)$departamentoId)
+            ->orderBy('fecha', 'desc')
+            ->get()
+    );
 });
