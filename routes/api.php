@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Multa;
+use App\Http\Controllers\MarkAsReadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,5 @@ Route::get('/notificaciones/{departamentoId}', function ($departamentoId) {
             ->get()
     );
 });
+
+Route::post('/mark_as_read', [MarkAsReadController::class, 'markAsRead']);
