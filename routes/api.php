@@ -20,12 +20,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/notificaciones/{departamentoId}', function ($departamentoId) {
-    return response()->json(
-        Multa::where('departamento_id', (string)$departamentoId)
-            ->orderBy('fecha', 'desc')
-            ->get()
-    );
+use Illuminate\Support\Facades\Log;
+
+Route::get('/notificaciones/{id}', function ($id) {
+    $multas = Multa::where('departamento_id', $id)->get();
+    Log::info('Multas encontradas:', $multas->toArray());
+
+    return response()->json([
+        'success' => true,
+        'data' => $multas
+    ]);
 });
 
-Route::post('/mark_as_read', [MarkAsReadController::class, 'markAsRead']);
+
+Route::post('/mark_as_read', [MarkAsReadController::class, 'markAllAsRead']);

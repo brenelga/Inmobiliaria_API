@@ -11,4 +11,8 @@ class MultasController extends Controller
         ->orderBy('fecha', 'desc')
         ->get();
     }
+    
+    public function registrarMultas($departamentoId, $monto, $mensaje){
+
+    }
 }
