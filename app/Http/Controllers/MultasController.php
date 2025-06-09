@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Multa;
+use Carbon\Carbon;
+
 class MultasController extends Controller
 {
     public function obtenerMultas($departamentoId) {
@@ -12,7 +14,22 @@ class MultasController extends Controller
         ->get();
     }
     
-    public function registrarMultas($departamentoId, $monto, $mensaje){
+    public function store(Request $request) {
+        $request->validate([
+            'departamento_id' => 'required|string',
+            'monto' => 'required|numeric',
+            'mensaje' => 'required|string',
+        ]);
 
+        $multa = Multa::create([
+            'departamento_id' => $request->departamento_id,
+            'mensaje' => $request->mensaje,
+            'monto' => $request->monto,
+            'fecha' => Carbon::now()->format('d-m-Y'),
+            'status' => 'Sin Pagar',
+            'read' => 'unread'
+        ]);
+
+        return response()->json($multa, 201);
     }
 }

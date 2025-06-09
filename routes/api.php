@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Multa;
 use App\Http\Controllers\MarkAsReadController;
+use App\Http\Controllers\MultasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,8 +25,6 @@ use Illuminate\Support\Facades\Log;
 
 Route::get('/notificaciones/{id}', function ($id) {
     $multas = Multa::where('departamento_id', $id)->get();
-    Log::info('Multas encontradas:', $multas->toArray());
-
     return response()->json([
         'success' => true,
         'data' => $multas
@@ -33,4 +32,5 @@ Route::get('/notificaciones/{id}', function ($id) {
 });
 
 
-Route::post('/mark_as_read', [MarkAsReadController::class, 'markAllAsRead']);
+Route::post('/mark_as_read',  [MarkAsReadController::class, 'markAllAsRead']);
+Route::post('/multas', [MultasController::class, 'store']);
