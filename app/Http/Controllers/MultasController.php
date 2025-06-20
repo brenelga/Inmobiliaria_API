@@ -25,7 +25,7 @@ class MultasController extends Controller
             'departamento_id' => $request->departamento_id,
             'mensaje' => $request->mensaje,
             'monto' => $request->monto,
-            'fecha' => Carbon::now()->format('d-m-Y'),
+            'fecha' => Carbon::now()->format('Y-m-d'),
             'status' => 'Sin Pagar',
             'read' => 'unread'
         ]);
