@@ -1,4 +1,5 @@
 <?php
+use App\Models\MongoSanctum;
 
 return [
 
@@ -31,7 +32,13 @@ return [
     |
     */
 
-    'guard' => ['web'],
+    'guards' => [
+    'api' => [
+        'driver' => 'sanctum',
+        'provider' => 'users',
+        'token_model' => \App\Models\MongoSanctum::class,
+    ],
+],
 
     /*
     |--------------------------------------------------------------------------
@@ -61,5 +68,7 @@ return [
         'verify_csrf_token' => App\Http\Middleware\VerifyCsrfToken::class,
         'encrypt_cookies' => App\Http\Middleware\EncryptCookies::class,
     ],
-
+    'models' => [
+    'PersonalAccessToken' => App\Models\MongoSanctum::class,
+],
 ];

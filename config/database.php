@@ -39,14 +39,8 @@ return [
     'driver'   => 'mongodb',
     'dsn' => env('DB_URI'),
     'database' => env('DB_DATABASE'),
-    'options'  => [
-        'database' => env('DB_AUTHENTICATION_DATABASE', 'admin')
-    ]
 ],
-
-
-    ],
-
+],
     /*
     |--------------------------------------------------------------------------
     | Migration Repository Table

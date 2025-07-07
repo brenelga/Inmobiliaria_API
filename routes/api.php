@@ -5,6 +5,7 @@ use App\Models\Multa;
 use App\Http\Controllers\MarkAsReadController;
 use App\Http\Controllers\MultasController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 
 Route::middleware(['auth:sanctum'])->group(function() {
 
@@ -30,3 +31,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::middleware('auth:sanctum')->post('/change-password', [UserController::class, 'changePassword']);
+
+Route::middleware('auth:sanctum')->get('/check-auth', function (Request $request) {
+    return response()->json(['valid' => true]);
+});
