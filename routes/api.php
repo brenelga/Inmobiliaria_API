@@ -6,34 +6,45 @@ use App\Http\Controllers\MarkAsReadController;
 use App\Http\Controllers\MultasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\FacturacionController;
+use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\MetodoPagoController;
+use App\Http\Controllers\RegistroController;
 
-Route::middleware(['auth:sanctum'])->group(function() {
+        Route::post('/login', [LoginController::class, 'login']);
+        Route::post('/registro', [RegistroController::class, 'registrar']);
 
-    Route::middleware(['role:admin'])->group(function () {
-        Route::post('/multas', [MultasController::class, 'store']);
-    });
+        Route::middleware(['auth.mongodb'])->group(function () {
+            Route::get('/perfil', [UserController::class, 'perfil']);
+            Route::get('/vehiculos', [UserController::class, 'vehiculos']);
 
-    Route::middleware(['role:inquilino'])->group(function () {
-        Route::get('/notificaciones/{id}', function ($id) {
-            $multas = Multa::where('departamento_id', $id)->get();
-            return response()->json([
-                'success' => true,
-                'data' => $multas
-            ]);
+            Route::prefix('facturacion')->group(function () {
+                Route::get('/', [FacturacionController::class, 'obtenerDatosFacturacion']);
+                Route::post('/', [FacturacionController::class, 'guardarDatosFacturacion']);
+                Route::get('/estados', [FacturacionController::class, 'obtenerEstados']);
+            });
+
+            Route::prefix('vehiculos')->group(function () {
+                Route::get('/', [VehiculoController::class, 'index']);
+                Route::post('/', [VehiculoController::class, 'store']);
+                Route::put('/{id}', [VehiculoController::class, 'update']);
+                Route::delete('/{id}', [VehiculoController::class, 'destroy']);
+            });
+
+            Route::prefix('metodos-pago')->group(function() {
+                Route::get('/', [MetodoPagoController::class, 'index']);
+                Route::post('/', [MetodoPagoController::class, 'store']);
+                Route::delete('/{id}', [MetodoPagoController::class, 'destroy']);
+            });
+
+            Route::prefix('usuario')->group(function(){
+                Route::get('/', [UserController::class, 'show']);
+                Route::patch('/datos-personales', [UserController::class, 'updatePersonalData']);
+                Route::patch('/credenciales', [UserController::class, 'updateCredentials']);
+                Route::post('/correos', [UserController::class], 'addEmail');
+                Route::delete('/correos/{email}', [UserController::class, 'removeEmail']);
+                Route::post('/telefonos', [UserController::class, 'addPhone']);
+                Route::delete('/telefonos/{phone}', [UserController::class, 'removePhone']);
+            });
         });
-
-        Route::post('/mark_as_read', [MarkAsReadController::class, 'markAllAsRead']);
-    });
-});
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('/login', [LoginController::class, 'login']);
-
-Route::middleware('auth:sanctum')->post('/change-password', [UserController::class, 'changePassword']);
-
-Route::middleware('auth:sanctum')->get('/check-auth', function (Request $request) {
-    return response()->json(['valid' => true]);
-});

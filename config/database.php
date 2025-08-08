@@ -34,11 +34,10 @@ return [
     */
 
     'connections' => [
-
         'mongodb' => [
-    'driver'   => 'mongodb',
-    'dsn' => env('DB_URI'),
-    'database' => env('DB_DATABASE'),
+    'driver' => 'mongodb',
+    'dsn' => env('MONGO_URI'),
+    'database' => env('DB_DATABASE_MONGO', 'forge'),
 ],
 ],
     /*
