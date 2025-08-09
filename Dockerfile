@@ -16,6 +16,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 WORKDIR /app
 COPY . .
 
+ENV PORT=8000
+
+CMD ["sh", "-c", "php artisan serve --host=0.0.0.0 --port=${PORT:-8000}"]
+
 # Instalar dependencias
 RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
 
