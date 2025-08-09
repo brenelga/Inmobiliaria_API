@@ -1,21 +1,26 @@
-FROM php:8.2-cli
+FROM php:8.2-fpm
 
-# Instalar dependencias
+# Instalar dependencias necesarias para PHP y Laravel
 RUN apt-get update && \
-    apt-get install -y libssl-dev git unzip libcurl4-openssl-dev pkg-config && \
+    apt-get install -y libssl-dev git unzip libcurl4-openssl-dev pkg-config nginx && \
     pecl install mongodb-1.15.0 && \
     docker-php-ext-enable mongodb && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /app
+# Configuración de Nginx
+RUN rm /etc/nginx/sites-enabled/default
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copiar código de la aplicación
+WORKDIR /var/www/html
 COPY . .
 
-RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
+# Instalar dependencias PHP
+RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs && \
+    chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Solución definitiva para el puerto
-ENV PORT=8000
-RUN echo '<?php passthru("php artisan serve --host=0.0.0.0 --port=".(int)($_ENV["PORT"]??8000));' > /start.php
-COPY fix-serve-command.php /fix-serve-command.php
-RUN php /fix-serve-command.php
+# Exponer el puerto de Nginx
+EXPOSE 8000
 
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT:-8000}"]
+# Comando de inicio: Nginx + PHP-FPM
+CMD service nginx start && php-fpm
