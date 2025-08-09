@@ -22,4 +22,4 @@ RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
 # Configuración final
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
-CMD ["php", "server.php"]
+CMD ["php", "artisan-server.php"]
