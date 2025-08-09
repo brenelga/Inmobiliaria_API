@@ -23,4 +23,4 @@ RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs && \
 EXPOSE 8000
 
 # Comando de inicio: Nginx + PHP-FPM
-CMD service nginx start && php-fpm
+CMD ["/bin/sh", "-c", "service nginx start && php-fpm"]
