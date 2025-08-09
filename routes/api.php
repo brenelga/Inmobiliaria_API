@@ -14,6 +14,9 @@ use App\Http\Controllers\RegistroController;
 
         Route::post('/login', [LoginController::class, 'login']);
         Route::post('/registro', [RegistroController::class, 'registrar']);
+        Route::get('/ping', function () {
+    return response()->json(['message' => 'pong']);
+});
 
         Route::middleware(['auth.mongodb'])->group(function () {
             Route::get('/perfil', [UserController::class, 'perfil']);
