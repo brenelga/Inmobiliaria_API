@@ -1,9 +1,11 @@
 FROM php:8.2-cli
 
-# Instalar dependencias del sistema y extensión MongoDB
+# Instalar dependencias del sistema
 RUN apt-get update && \
-    apt-get install -y libssl-dev git unzip && \
-    pecl install mongodb && \
+    apt-get install -y libssl-dev git unzip libcurl4-openssl-dev pkg-config
+
+# Instalar versión específica de MongoDB extension (1.21.0)
+RUN pecl install mongodb-1.21.0 && \
     docker-php-ext-enable mongodb
 
 # Instalar Composer
@@ -14,8 +16,8 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 WORKDIR /app
 COPY . .
 
-# Instalar dependencias
-RUN composer install --optimize-autoloader --no-dev
+# Instalar dependencias (ignorando requisitos de plataforma temporalmente)
+RUN composer install --optimize-autoloader --no-dev --ignore-platform-req=ext-mongodb
 
 # Iniciar la aplicación
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
