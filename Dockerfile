@@ -20,9 +20,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Configurar PHP
-COPY php.ini /usr/local/etc/php/conf.d/php.ini
-
 # Copiar código de la aplicación
 WORKDIR /var/www/html
 COPY . .
