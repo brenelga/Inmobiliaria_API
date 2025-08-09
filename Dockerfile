@@ -17,7 +17,8 @@ WORKDIR /app
 COPY . .
 
 # Instalar dependencias (ignorando requisitos de plataforma temporalmente)
-RUN rm -rf composer.lock && \
-    composer install --optimize-autoloader --no-dev --ignore-platform-reqs
+RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs || \
+    (composer update --with-all-dependencies --ignore-platform-reqs && \
+     composer install --optimize-autoloader --no-dev --ignore-platform-reqs)
 # Iniciar la aplicación
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=${PORT}"]
