@@ -4,7 +4,7 @@ FROM php:8.2-cli
 RUN apt-get update && \
     apt-get install -y libssl-dev git unzip libcurl4-openssl-dev pkg-config
 
-# Instalar extensión MongoDB
+# Instalar extensión MongoDB (versión específica)
 RUN pecl install mongodb-1.15.0 && \
     docker-php-ext-enable mongodb
 
@@ -16,9 +16,10 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 WORKDIR /app
 COPY . .
 
-# Instalar dependencias ANTES del CMD
+# Instalar dependencias
 RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
 
+# Configuración final
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 CMD ["/start.sh"]
