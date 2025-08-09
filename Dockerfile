@@ -15,4 +15,4 @@ RUN composer install --optimize-autoloader --no-dev --ignore-platform-reqs
 # Solución definitiva para el puerto
 ENV PORT=8000
 RUN echo '<?php passthru("php artisan serve --host=0.0.0.0 --port=".(int)($_ENV["PORT"]??8000));' > /start.php
-CMD ["php", "/start.php"]
+CMD ["php", "server.php"]
