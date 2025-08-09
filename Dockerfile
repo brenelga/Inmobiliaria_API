@@ -9,11 +9,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 WORKDIR /var/www/html
 
-COPY composer.json composer.lock /var/www/html/
-RUN composer install --optimize-autoloader --no-dev || cat /root/.composer/composer.log
-COPY . /var/www/html
-
 COPY . .
+
+RUN composer install --optimize-autoloader --no-dev
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 
