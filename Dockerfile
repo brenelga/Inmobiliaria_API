@@ -1,7 +1,7 @@
 FROM php:8.2-fpm
 
 RUN apt-get update && apt-get install -y nginx git unzip libssl-dev libcurl4-openssl-dev pkg-config \
-    && pecl install mongodb-1.15.0 \
+    && pecl install mongodb \
     && docker-php-ext-enable mongodb \
     && rm -rf /var/lib/apt/lists/*
 
