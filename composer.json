@@ -8,12 +8,12 @@
         "php": "^8.2",
         "fruitcake/laravel-cors": "dev-develop",
         "guzzlehttp/guzzle": "^7.2",
-        "jenssegers/mongodb": "^4.0",
+        "jenssegers/mongodb": "*",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "mongodb/laravel-mongodb": "^4.9",
-        "mongodb/mongodb": "2.0"
+        "mongodb/mongodb": "^1.21"
     },
 "require-dev": {
     "fakerphp/faker": "^1.9.1",
