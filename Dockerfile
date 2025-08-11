@@ -19,4 +19,4 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8000
 
-CMD ["/bin/sh", "-c", "service nginx start && php-fpm"]
+CMD ["/bin/sh", "-c", "nginx && php-fpm"]
