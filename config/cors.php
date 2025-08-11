@@ -5,7 +5,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://ivss-web-sl4b.vercel.app', 'http://localhost:5173'],
+    'allowed_origins' => ['*'],
 
     'allowed_headers' => ['*'],
 
