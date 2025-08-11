@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Jenssegers\Mongodb\Eloquent\Model;
+use MongoDB\LaraveL\Eloquent\Model;
 
 class VehiculoModel extends Model
 {
