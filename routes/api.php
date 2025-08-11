@@ -2,11 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MarkAsReadController;
-use App\Http\Controllers\MultasController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\FacturacionController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\MetodoPagoController;
