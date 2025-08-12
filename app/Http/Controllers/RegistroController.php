@@ -69,8 +69,8 @@ class RegistroController extends Controller
             'anio' => (int) date('Y'),
             'vin' => strtoupper($request->input('vehiculo.VIN')),
             'propietario' => $usuario->_id,
-            'updated_at' => new UTCDateTime(now()->getTimestamp() * 1000),
-            'created_at' => new UTCDateTime(now()->getTimestamp() * 1000)
+            'updated_at' => now(),
+            'created_at' => now()
         ];
 
         $vehiculo = VehiculoModel::create($vehiculoData);
@@ -88,7 +88,7 @@ class RegistroController extends Controller
     private function procesarContrasena($password, $username)
     {
         try {
-            $response = Http::post('https://api-python-sage.vercel.app/vigenere/cifrar', [
+            $response = Http::post('http://localhost:8800/vigenere/cifrar', [
                 'texto' => $password,
                 'clave' => $username
             ]);

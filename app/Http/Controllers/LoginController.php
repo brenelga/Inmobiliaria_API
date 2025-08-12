@@ -15,17 +15,19 @@ class LoginController extends Controller
             'username' => 'required|string',
             'password' => 'required|string'
         ]);
-
+        
         $user = User::where('nombre_usuario.usuario', $request->username)->first();
-
+        
         if (!$user) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        $vigenereResponse = Http::post('https://api-python-sage.vercel.app/vigenere/cifrar', [
+        $vigenereResponse = Http::post('http://localhost:8800/vigenere/cifrar', [
             'clave' => $request->username,
             'texto' => $request->password
         ]);
+
+        
 
         if ($vigenereResponse->failed()) {
             return response()->json(['message' => 'Error cifrando la contraseña'], 500);
